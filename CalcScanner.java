@@ -60,7 +60,7 @@ public class CalcScanner {
 		this.source_file = source_file;
 	}
 	
-	public LinkedList getTokens()
+	public LinkedList<String> getTokens()
 	{
 		return this.tokens;
 	}
