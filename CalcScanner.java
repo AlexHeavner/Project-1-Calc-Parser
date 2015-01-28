@@ -1,41 +1,33 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.LinkedList;
-
-
-public class CalcScanner {
-	private File source_file;
-	private LinkedList <String>tokens;
+private File source_file;
+	private LinkedList <Token> tokens;
 	private BufferedReader br;
 	
-	public LinkedList<String> scan()
+	public LinkedList<Token> scan()
 	{	
 		String input;
-		String file_contents = "";
-
+		String[] input_tokens;
+		int line_number = 1;
+		
+		this.tokens = new LinkedList<Token>();
 		try
 		{
 			this.br = new BufferedReader(new FileReader(this.source_file));
 			
-			//adds extra space at end of input so it will split correctly
 			while((input = this.br.readLine())!= null)
-				file_contents = file_contents + input + " ";
-			
+			{
+				input_tokens=input.split(" ");
+				
+				for(String element: input_tokens)
+					this.tokens.add(new Token(element, line_number));
+
+				line_number++;
+			}
 			this.br.close();
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace();
 		}
-		
-		this.tokens = new LinkedList<String>();
-		
-		String[] token_array = file_contents.split(" +");
-		
-		for(String element : token_array)
-			this.tokens.add(element);
 		
 		return this.tokens;
 	}
@@ -60,7 +52,7 @@ public class CalcScanner {
 		this.source_file = source_file;
 	}
 	
-	public LinkedList<String> getTokens()
+	public LinkedList<Token> getTokens()
 	{
 		return this.tokens;
 	}
