@@ -1,0 +1,44 @@
+type of Tokens: ID, NUM, ADD, MUL, LEFTP, RIGHTP, READ, WRITE
+
+global variable: token
+
+//consume token and move onto next one
+function boolean match(expected):
+//expected is the etype of token that is expected 
+	if(type(token) == expected)
+		token = getNextToken();
+	else error(); return false;
+
+function boolean E()
+	if(Term() && TT())
+		return true; 
+	else error(); return false; 
+
+function boolean TT()
+	if(Add_Op())
+		return (match(ADD) && Term() && TT())
+	else 
+		return true; 
+
+function boolean Term()
+	if(F() && FT())
+		return true; 
+	else error(); return false; 
+
+function boolean F()
+	if(token is '('
+		return (match(LEFTP) && match(E) && match(RIGHTP))
+	else if (token is id)
+		return match(ID);
+	else if (token is NUM)
+		return martch(NUM)
+	else error(); return false; 
+
+function boolean FT()
+	if(token is '*' or '/')
+		return match(MUL) && F() && FT();
+	else
+		return true; 
+
+if(E() && input == 'END')
+	print valid
