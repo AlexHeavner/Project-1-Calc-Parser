@@ -1,4 +1,11 @@
-private File source_file;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.LinkedList;
+
+public class CalcScanner {
+	private File source_file;
 	private LinkedList <Token> tokens;
 	private BufferedReader br;
 	
@@ -15,13 +22,14 @@ private File source_file;
 			
 			while((input = this.br.readLine())!= null)
 			{
-				input_tokens=input.split(" ");
+				input_tokens=input.split(" +");
 				
 				for(String element: input_tokens)
 					this.tokens.add(new Token(element, line_number));
 
 				line_number++;
 			}
+
 			this.br.close();
 		}
 		catch(IOException e)
