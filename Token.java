@@ -1,12 +1,13 @@
-public class Token{
+public class Token
+{
 	private Type type;
 	private String token;
 	private int line_number;
 	
-	public Token(String token,int line_number)
+	public Token(String token,int line_number, Type t)
 	{
 		this.token = token;
-		this.type = Type.UNDEFINED;
+		this.type = t;
 		this.line_number = line_number;
 	}
 	

@@ -1,4 +1,5 @@
 
-public enum Type {
-	ID, NUM, ADD, MUL, LEFTP, RIGHTP, READ, WRITE, UNDEFINED;
+public enum Type 
+{
+	ID, NUM, ADD_OP, SUB_OP, MULT_OP, DIV_OP, LEFTP, RIGHTP, READ, WRITE, STMT, UNDEFINED;
 }
