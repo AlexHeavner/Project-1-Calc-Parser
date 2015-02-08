@@ -17,6 +17,13 @@ public class CalcParser {
 		}
 	}
 	
+	//this method is not done
+	private boolean match(Type expected)
+	{
+		if(this.type == expected)
+			return true;
+	}
+	
 	private boolean expression()
 	{
 		if(termTail() && term())
@@ -35,17 +42,33 @@ public class CalcParser {
 	
 	private boolean term()
 	{
-		
+		if(Factor() && FactorTail())
+			return true; 
+		else 
+		{
+			error();
+			return false; 
+		}
+	}
+	
+	private boolean factor()
+	{
+		if(this.type == LEFTP)
+			return (match(LEFTP) && match(E) && match(RIGHTP));
+		else if(this.type == ID)
+			return match(ID);
+		else if(this.type == NUM)
+			return match(NUM)
+		else
+		{
+			error();
+			return false;
+		}
+				
 	}
 	
 	private boolean addOp()
 	{
 		return 
 	}
-	
-	private boolean match(Type expected)
-	{
-		
-	}
-	
 }
