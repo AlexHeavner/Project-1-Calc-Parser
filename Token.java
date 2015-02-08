@@ -1,17 +1,16 @@
-
 public class Token{
-	private String type;
+	private Type type;
 	private String token;
 	private int line_number;
 	
 	public Token(String token,int line_number)
 	{
 		this.token = token;
-		this.type = "undefined";
+		this.type = Type.UNDEFINED;
 		this.line_number = line_number;
 	}
 	
-	public void setType(String type)
+	public void setType(Type type)
 	{
 		this.type = type;
 	}
@@ -21,7 +20,7 @@ public class Token{
 		return token;
 	}
 	
-	public String getType()
+	public Type getType()
 	{
 		return type;
 	}
