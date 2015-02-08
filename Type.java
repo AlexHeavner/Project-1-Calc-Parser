@@ -1,0 +1,4 @@
+
+public enum Type {
+	ID, NUM, ADD, MUL, LEFTP, RIGHTP, READ, WRITE, UNDEFINED;
+}
