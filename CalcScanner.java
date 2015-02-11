@@ -85,8 +85,8 @@ public class CalcScanner
 	private static void buildTokenMap()
 	{
 		Token_Type.put(":=", Type.STMT);
-		Token_Type.put("read", Type.STMT);
-		Token_Type.put("write", Type.STMT);
+		Token_Type.put("read", Type.READ);
+		Token_Type.put("write", Type.WRITE);
 		Token_Type.put("+", Type.ADD_OP);
 		Token_Type.put("-", Type.SUB_OP);
 		Token_Type.put("*", Type.MULT_OP);
