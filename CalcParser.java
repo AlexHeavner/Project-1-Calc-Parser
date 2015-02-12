@@ -43,7 +43,17 @@ public class CalcParser
 			getNextToken();
 			return true;
 		}
+		else
+		{
+			error(expected, this.type);
+			return false;
+		}
 			
+	}
+
+	private static void error(Type expected, Type found)
+	{
+		System.out.println("Error: expected "+ expected +". Found: "+found);
 	}
 	
 	private boolean expression()
