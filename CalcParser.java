@@ -1,12 +1,22 @@
 import java.util.LinkedList;
+import java.util.Iterator;
 
 
-public class CalcParser {
+public class CalcParser 
+{
 	private LinkedList<Token> tokens;
+	private Iterator iterator;
+	private Token current_token; 
 	
 	public CalcParser(LinkedList<Token> tokens)
 	{
 		this.tokens = tokens;
+		iterator = tokens.listIterator();
+
+		if(iterator.hasNext())
+			current_token = iterator.next();
+		else
+			current_token = null;
 	}
 	
 	public void parse()
@@ -16,12 +26,24 @@ public class CalcParser {
 			
 		}
 	}
+
+	private void getNextToken()
+	{
+		if(iterator.hasNext())
+			current_token = iterator.next();
+		else
+			current_token = null;
+	}
 	
 	//this method is not done
 	private boolean match(Type expected)
 	{
 		if(this.type == expected)
+		{
+			getNextToken();
 			return true;
+		}
+			
 	}
 	
 	private boolean expression()
@@ -58,17 +80,12 @@ public class CalcParser {
 		else if(this.type == ID)
 			return match(ID);
 		else if(this.type == NUM)
-			return match(NUM)
+			return match(NUM);
 		else
 		{
 			error();
 			return false;
 		}
 				
-	}
-	
-	private boolean addOp()
-	{
-		return 
 	}
 }
