@@ -5,7 +5,7 @@ import java.util.Iterator;
 public class CalcParser 
 {
 	private LinkedList<Token> tokens;
-	private Iterator iterator;
+	private Iterator<Token> iterator;
 	private Token current_token; 
 	
 	public CalcParser(LinkedList<Token> tokens)
@@ -19,11 +19,27 @@ public class CalcParser
 			current_token = null;
 	}
 	
-	public void parse()
+	public boolean parse()
 	{
-		for(Token element: tokens)
+		if(expression() && current_token == null)
 		{
-			
+			return true;
+		}
+		else return false;
+	}
+
+	//this method is not done
+	private boolean match(Type expected)
+	{
+		if(current_token.getType() == expected)
+		{
+			getNextToken();
+			return true;
+		}
+		else
+		{
+			error(expected, current_token.getType());
+			return false;
 		}
 	}
 
@@ -34,22 +50,6 @@ public class CalcParser
 		else
 			current_token = null;
 	}
-	
-	//this method is not done
-	private boolean match(Type expected)
-	{
-		if(this.type == expected)
-		{
-			getNextToken();
-			return true;
-		}
-		else
-		{
-			error(expected, this.type);
-			return false;
-		}
-			
-	}
 
 	private static void error(Type expected, Type found)
 	{
@@ -58,10 +58,23 @@ public class CalcParser
 	
 	private boolean expression()
 	{
-		if(termTail() && term())
+		if(term() && termTail())
 			return true;
 		else
-			return false; //error
+		{
+			return false;
+		}
+	}
+
+	private boolean term()
+	{
+		if(factor() && factorTail())
+			return true; 
+		else 
+		{
+			//error();
+			return false; 
+		}
 	}
 	
 	private boolean termTail()
@@ -72,30 +85,25 @@ public class CalcParser
 			return true;
 	}
 	
-	private boolean term()
-	{
-		if(Factor() && FactorTail())
-			return true; 
-		else 
-		{
-			error();
-			return false; 
-		}
-	}
-	
 	private boolean factor()
 	{
-		if(this.type == LEFTP)
-			return (match(LEFTP) && match(E) && match(RIGHTP));
-		else if(this.type == ID)
-			return match(ID);
-		else if(this.type == NUM)
-			return match(NUM);
+		if(current_token.getType() == Type.LEFTP)
+			return (match(Type.LEFTP) && expression() && match(Type.RIGHTP));
+		else if(current_token.getType() == Type.ID)
+			return match(Type.ID);
+		else if(current_token.getType() == Type.NUM)
+			return match(Type.NUM);
 		else
 		{
-			error();
 			return false;
-		}
-				
+		}	
+	}
+
+	private boolean factorTail()
+	{
+		if(current_token.getType() == Type.MULT_OP)
+			return match(MULT_OP) && factor() && factorTail();
+		else if(current_token.getType == Type.DIV_OP)
+			return match(DIV_OP) && factor() && factorTail();
 	}
 }
