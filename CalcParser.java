@@ -102,8 +102,8 @@ public class CalcParser
 	private boolean factorTail()
 	{
 		if(current_token.getType() == Type.MULT_OP)
-			return match(MULT_OP) && factor() && factorTail();
-		else if(current_token.getType == Type.DIV_OP)
-			return match(DIV_OP) && factor() && factorTail();
+			return match(Type.MULT_OP) && factor() && factorTail();
+		else if(current_token.getType() == Type.DIV_OP)
+			return match(Type.DIV_OP) && factor() && factorTail();
 	}
 }
