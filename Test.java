@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.util.Iterator;
 
 
 public class Test 
@@ -10,19 +11,30 @@ public class Test
 
 		CalcScanner scanner = new CalcScanner(valid_program);
 		
-		LinkedList<Token> token_list = scanner.scan();
-		
-		for(Token element: token_list)
-			System.out.println(element.getToken() + " "+element.getType() + " " +element.getLine());
-		
+		LinkedList<LinkedList<Token>> statement_list = scanner.scan();
+
+		Iterator<LinkedList<Token>> statement_it = statement_list.iterator();
+
+		while(statement_it.hasNext())
+		{
+			Iterator<Token> tokens_it = statement_it.next().iterator();
+
+			while(tokens_it.hasNext())
+			{
+				Token token = tokens_it.next();
+				System.out.println(token.getToken() + " "+token.getType() + " " +token.getLine());
+			}
+		}
+
 		System.out.println("Scanning Complete, beginning to Parse.");
 
-		CalcParser parser = new CalcParser(token_list);
+		/*
+		CalcParser parser = new CalcParser(statement_list);
 
 		if(parser.parse())
 			System.out.println("The program is valid.");
 		else 
 			System.out.println("The program is invalid");
-
+		*/
 	}
 }

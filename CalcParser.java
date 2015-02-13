@@ -33,6 +33,7 @@ public class CalcParser
 	//this method is not done
 	private boolean match(Type expected)
 	{
+		int current_line = current_token.getLine();
 		if(current_token.getType() == expected)
 		{
 			getNextToken();
@@ -60,6 +61,14 @@ public class CalcParser
 	private static void error(Type expected, Type found)
 	{
 		System.out.println("Error: expected "+ expected +". Found: "+found);
+	}
+
+	private boolean statementList()
+	{
+		if(statement() || statementList())
+			return true;
+		else 
+			return false;
 	}
 
 	private boolean statement()

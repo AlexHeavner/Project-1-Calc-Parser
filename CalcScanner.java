@@ -8,7 +8,8 @@ import java.util.HashMap;
 public class CalcScanner
 {
 	private File source_file;
-	private LinkedList <Token> tokens;
+	private LinkedList <LinkedList <Token>> statement_list;
+	//private LinkedList <Token> tokens;
 	private BufferedReader br;
 	private static HashMap<String, Type> Token_Type = new HashMap<String, Type>();
 	
@@ -30,13 +31,13 @@ public class CalcScanner
 		this.source_file = null;
 	}
 
-	public LinkedList<Token> scan()
+	public LinkedList<LinkedList<Token>> scan()
 	{	
 		String input;
 		String[] input_tokens;
 		int line_number = 1;
 		
-		this.tokens = new LinkedList<Token>();
+		this.statement_list = new LinkedList<LinkedList<Token>>();
 		try
 		{
 			this.br = new BufferedReader(new FileReader(this.source_file));
@@ -45,6 +46,7 @@ public class CalcScanner
 			{
 				input_tokens=input.split(" ");
 				
+				LinkedList<Token> tokens = new LinkedList<Token>();
 				for(String element: input_tokens)
 				{
 					Type type = Type.UNDEFINED; 
@@ -57,9 +59,9 @@ public class CalcScanner
 					else if(isNum(element))
 						type = Type.NUM;
 					
-					this.tokens.add(new Token(element, line_number, type));
+					tokens.add(new Token(element, line_number, type));
 				}
-
+				statement_list.add(tokens);
 				line_number++;
 			}
 			this.br.close();
@@ -69,7 +71,7 @@ public class CalcScanner
 			e.printStackTrace();
 		}
 		
-		return this.tokens;
+		return statement_list;
 	}
 	
 	public void setFile(File source_file)
@@ -77,9 +79,9 @@ public class CalcScanner
 		this.source_file = source_file;
 	}
 	
-	public LinkedList<Token> getTokens()
+	public LinkedList<LinkedList<Token>> getTokens()
 	{
-		return this.tokens;
+		return statement_list;
 	}
 	
 	private static void buildTokenMap()
