@@ -8,6 +8,7 @@ public class Test
 	{
 		String valid_program = "myprog.calc";
 		String invalid_program = "badprog.calc";
+		CalcWriter writer = new CalcWriter("myprog");
 
 		CalcScanner scanner = new CalcScanner(valid_program);
 		
@@ -32,8 +33,12 @@ public class Test
 
 		CalcParser parser = new CalcParser(statement_list);
 
-		if(parser.parse_statements())
+		if(parser.parse_statements()){
 			System.out.println("The program is valid.");
+			writer.write(statement_list);
+			
+		}
+		
 		else 
 			System.out.println("The program is invalid");
 	}
