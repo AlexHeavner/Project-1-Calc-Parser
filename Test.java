@@ -5,7 +5,10 @@ public class Test
 {
 	public static void main(String[] args)
 	{
-		CalcScanner scanner = new CalcScanner("myprog.calc");
+		String valid_program = "myprog.calc";
+		String invalid_program = "badprog.calc";
+
+		CalcScanner scanner = new CalcScanner(valid_program);
 		
 		LinkedList<Token> token_list = scanner.scan();
 		

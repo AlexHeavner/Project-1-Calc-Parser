@@ -17,11 +17,13 @@ public class CalcParser
 			current_token = iterator.next();
 		else
 			current_token = null;
+
+		System.out.println("Current token: "+current_token.getToken());
 	}
 	
 	public boolean parse()
 	{
-		if(expression() && current_token == null)
+		if(statement() && current_token == null)
 		{
 			return true;
 		}
@@ -46,7 +48,11 @@ public class CalcParser
 	private void getNextToken()
 	{
 		if(iterator.hasNext())
+		{
 			current_token = iterator.next();
+			System.out.println("next token is: "+ current_token.getToken());
+
+		}
 		else
 			current_token = null;
 	}
@@ -54,6 +60,18 @@ public class CalcParser
 	private static void error(Type expected, Type found)
 	{
 		System.out.println("Error: expected "+ expected +". Found: "+found);
+	}
+
+	private boolean statement()
+	{
+		if(current_token.getType() == Type.ID)
+			return (match(Type.ID) && match(Type.ASSIGN) && expression());
+		else if(current_token.getType() == Type.READ)
+			return (match(Type.READ) && match(Type.ID));
+		else if(current_token.getType() == Type.WRITE)
+			return (match(Type.WRITE) && expression());
+		else 
+			return false; 
 	}
 	
 	private boolean expression()

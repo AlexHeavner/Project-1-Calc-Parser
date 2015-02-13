@@ -1,0 +1,5 @@
+red A
+read B
+sum := A + B + 1.1.1 B
+write sum;
+write sum/2
