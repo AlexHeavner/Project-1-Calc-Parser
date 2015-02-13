@@ -20,7 +20,7 @@ public class CalcWriter {
 		{
 			writer = new FileWriter(new File(file_name + ".java"));
 			
-			writer.write("import java.util.Scanner; \n puplic class " + file_name + "{ \n " +
+			writer.write("import java.util.Scanner; \n public class " + file_name + "{ \n " +
 					"public static void main(String[] args){ \n" +
 					"Scanner scan = new Scanner(System.in);\n");
 			
