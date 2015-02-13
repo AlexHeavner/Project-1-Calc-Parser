@@ -17,8 +17,10 @@ public class Test
 
 		while(statement_it.hasNext())
 		{
+			//each statement
 			Iterator<Token> tokens_it = statement_it.next().iterator();
 
+			//each token
 			while(tokens_it.hasNext())
 			{
 				Token token = tokens_it.next();
@@ -27,6 +29,23 @@ public class Test
 		}
 
 		System.out.println("Scanning Complete, beginning to Parse.");
+
+		//reset iterator
+		Iterator<LinkedList<Token>> statement_it2 = statement_list.iterator();
+		
+		while(statement_it2.hasNext())
+		{
+			//each statement
+			LinkedList<Token> statement = statement_it2.next();
+
+			CalcParser parser = new CalcParser(statement);
+
+			if(parser.parse())
+				System.out.println("The statement is valid.");
+			else 
+				System.out.println("The statement is invalid");
+			
+		}
 
 		/*
 		CalcParser parser = new CalcParser(statement_list);

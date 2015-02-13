@@ -34,6 +34,7 @@ public class CalcParser
 	private boolean match(Type expected)
 	{
 		int current_line = current_token.getLine();
+
 		if(current_token.getType() == expected)
 		{
 			getNextToken();
@@ -74,7 +75,7 @@ public class CalcParser
 	private boolean statement()
 	{
 		if(current_token.getType() == Type.ID)
-			return (match(Type.ID) && match(Type.ASSIGN) && expression());
+			return (match(Type.ID) && match(Type.STMT) && expression());
 		else if(current_token.getType() == Type.READ)
 			return (match(Type.READ) && match(Type.ID));
 		else if(current_token.getType() == Type.WRITE)
@@ -106,8 +107,10 @@ public class CalcParser
 	
 	private boolean termTail()
 	{
-		if(current_token.getType() == Type.ADD_OP || current_token.getType() == Type.SUB_OP)
-			return((match(Type.ADD_OP)||match(Type.SUB_OP)) && term() && termTail());
+		if(current_token.getType() == Type.ADD_OP )
+			return(match(Type.ADD_OP) && term() && termTail());
+		else if(current_token.getType() == Type.SUB_OP)
+			return(match(Type.SUB_OP) && term() && termTail());
 		else
 			return true;
 	}
@@ -132,6 +135,7 @@ public class CalcParser
 			return match(Type.MULT_OP) && factor() && factorTail();
 		else if(current_token.getType() == Type.DIV_OP)
 			return match(Type.DIV_OP) && factor() && factorTail();
-		else return true;
+		else 
+			return true;
 	}
 }
