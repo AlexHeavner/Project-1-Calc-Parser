@@ -4,30 +4,68 @@ import java.util.Iterator;
 
 public class CalcParser 
 {
+	private LinkedList<LinkedList<Token>> statement_list;
 	private LinkedList<Token> tokens;
-	private Iterator<Token> iterator;
+	private Iterator<LinkedList<Token>> statement_iterator;
+	private Iterator<Token> token_iterator;
+	private LinkedList<Token> current_statement;
 	private Token current_token; 
 	
-	public CalcParser(LinkedList<Token> tokens)
+	public CalcParser(LinkedList<LinkedList<Token>> statements)
 	{
-		this.tokens = tokens;
-		iterator = tokens.listIterator();
+		statement_list = statements;
+		statement_iterator = statement_list.listIterator();
 
-		if(iterator.hasNext())
-			current_token = iterator.next();
-		else
-			current_token = null;
+		//load first token on first line
+		if(statement_iterator.hasNext())
+		{
+			current_statement = statement_iterator.next();
+			token_iterator = current_statement.iterator();
 
-		System.out.println("Current token: "+current_token.getToken());
+			if(token_iterator.hasNext())
+				current_token = token_iterator.next();
+			else
+				current_token = null;
+		}
+
+		System.out.println("First token: "+current_token.getToken());
 	}
 	
-	public boolean parse()
+	public boolean parse_statements()
+	{
+		boolean valid_flag = true; 
+		while(statement_iterator.hasNext())
+		{
+			if(parse())
+				System.out.println("valid statement");
+			else
+			{
+				System.out.println("invalid statement");
+				valid_flag = false;
+			}
+				
+			current_statement = statement_iterator.next();
+			token_iterator = current_statement.iterator();
+
+			//load first token of next statement
+			if(token_iterator.hasNext())
+				current_token = token_iterator.next();
+			else
+				current_token = null;
+		}
+		return valid_flag;
+	}
+
+	private boolean parse()
 	{
 		if(statement() && current_token == null)
 		{
 			return true;
 		}
-		else return false;
+		else
+		{
+			return false;
+		} 
 	}
 
 	//this method is not done
@@ -47,9 +85,9 @@ public class CalcParser
 
 	private void getNextToken()
 	{
-		if(iterator.hasNext())
+		if(token_iterator.hasNext())
 		{
-			current_token = iterator.next();
+			current_token = token_iterator.next();
 			System.out.println("next token is: "+ current_token.getToken());
 
 		}

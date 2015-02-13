@@ -9,7 +9,7 @@ public class Test
 		String valid_program = "myprog.calc";
 		String invalid_program = "badprog.calc";
 
-		CalcScanner scanner = new CalcScanner(invalid_program);
+		CalcScanner scanner = new CalcScanner(valid_program);
 		
 		LinkedList<LinkedList<Token>> statement_list = scanner.scan();
 
@@ -30,30 +30,11 @@ public class Test
 
 		System.out.println("Scanning Complete, beginning to Parse.");
 
-		//reset iterator
-		Iterator<LinkedList<Token>> statement_it2 = statement_list.iterator();
-		
-		while(statement_it2.hasNext())
-		{
-			//each statement
-			LinkedList<Token> statement = statement_it2.next();
-			int line_num = statement.get(0).getLine();
-			CalcParser parser = new CalcParser(statement);
-
-			if(parser.parse())
-				System.out.println("The statement is valid.");
-			else 
-				System.out.println("Syntax error on line "+ line_num);
-			
-		}
-
-		/*
 		CalcParser parser = new CalcParser(statement_list);
 
-		if(parser.parse())
+		if(parser.parse_statements())
 			System.out.println("The program is valid.");
 		else 
 			System.out.println("The program is invalid");
-		*/
 	}
 }
