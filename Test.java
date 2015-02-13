@@ -9,7 +9,7 @@ public class Test
 		String valid_program = "myprog.calc";
 		String invalid_program = "badprog.calc";
 
-		CalcScanner scanner = new CalcScanner(valid_program);
+		CalcScanner scanner = new CalcScanner(invalid_program);
 		
 		LinkedList<LinkedList<Token>> statement_list = scanner.scan();
 
@@ -37,13 +37,13 @@ public class Test
 		{
 			//each statement
 			LinkedList<Token> statement = statement_it2.next();
-
+			int line_num = statement.get(0).getLine();
 			CalcParser parser = new CalcParser(statement);
 
 			if(parser.parse())
 				System.out.println("The statement is valid.");
 			else 
-				System.out.println("The statement is invalid");
+				System.out.println("Syntax error on line "+ line_num);
 			
 		}
 

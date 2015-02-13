@@ -33,8 +33,6 @@ public class CalcParser
 	//this method is not done
 	private boolean match(Type expected)
 	{
-		int current_line = current_token.getLine();
-
 		if(current_token.getType() == expected)
 		{
 			getNextToken();
