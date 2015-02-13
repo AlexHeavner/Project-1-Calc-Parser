@@ -107,7 +107,9 @@ public class CalcParser
 	
 	private boolean termTail()
 	{
-		if(current_token.getType() == Type.ADD_OP )
+		if(current_token == null)
+			return true;
+		else if(current_token.getType() == Type.ADD_OP )
 			return(match(Type.ADD_OP) && term() && termTail());
 		else if(current_token.getType() == Type.SUB_OP)
 			return(match(Type.SUB_OP) && term() && termTail());
@@ -131,7 +133,9 @@ public class CalcParser
 
 	private boolean factorTail()
 	{
-		if(current_token.getType() == Type.MULT_OP)
+		if(current_token == null)
+			return true;
+		else if(current_token.getType() == Type.MULT_OP)
 			return match(Type.MULT_OP) && factor() && factorTail();
 		else if(current_token.getType() == Type.DIV_OP)
 			return match(Type.DIV_OP) && factor() && factorTail();
