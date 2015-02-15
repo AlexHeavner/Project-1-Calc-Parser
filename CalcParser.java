@@ -5,7 +5,7 @@ import java.util.Iterator;
 public class CalcParser 
 {
 	private LinkedList<LinkedList<Token>> statement_list;
-	private LinkedList<Token> tokens;
+	private LinkedList<String> error_list;
 	private Iterator<LinkedList<Token>> statement_iterator;
 	private Iterator<Token> token_iterator;
 	private LinkedList<Token> current_statement;
@@ -15,6 +15,7 @@ public class CalcParser
 	{
 		statement_list = statements;
 		statement_iterator = statement_list.listIterator();
+		error_list = new LinkedList<String>();
 
 		//load first token on first line
 		if(statement_iterator.hasNext())
@@ -36,11 +37,14 @@ public class CalcParser
 		boolean valid_flag = true; 
 		while(statement_iterator.hasNext())
 		{
-			if(parse())
-				System.out.println("valid statement");
+			if(parse());
+				//System.out.println("valid statement");
 			else
 			{
-				System.out.println("invalid statement");
+				//System.out.println("invalid statement");
+				
+				error_list.add("Syntax Error on Line " + current_statement.get(0).getLine());
+				
 				valid_flag = false;
 			}
 				
@@ -177,5 +181,10 @@ public class CalcParser
 			return match(Type.DIV_OP) && factor() && factorTail();
 		else 
 			return true;
+	}
+	
+	public LinkedList<String> getErrorList()
+	{
+		return error_list;
 	}
 }
