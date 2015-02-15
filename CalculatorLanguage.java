@@ -19,10 +19,5 @@ public class CalculatorLanguage
 			CalcWriter writer = new CalcWriter("myprog");
 			writer.write(statement_list);
 		}
-		//Otherwise print out the syntax errors
-		else 
-		{
-			System.out.println("The program is invalid");
-		} 
 	}
 }

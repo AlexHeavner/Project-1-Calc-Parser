@@ -28,8 +28,7 @@ public class CalcParser
 			else
 				current_token = null;
 		}
-
-		System.out.println("First token: "+current_token.getToken());
+		//System.out.println("First token: "+current_token.getToken());
 	}
 	
 	public boolean parse_statements()
@@ -37,14 +36,9 @@ public class CalcParser
 		boolean valid_flag = true; 
 		while(statement_iterator.hasNext())
 		{
-			if(parse());
-				//System.out.println("valid statement");
-			else
+			if(!parse())
 			{
-				//System.out.println("invalid statement");
-				
 				error_list.add("Syntax Error on Line " + current_statement.get(0).getLine());
-				
 				valid_flag = false;
 			}
 				
@@ -57,6 +51,14 @@ public class CalcParser
 			else
 				current_token = null;
 		}
+
+		if(!valid_flag)
+		{
+			Iterator<String> it = error_list.iterator();
+			while(it.hasNext())
+				System.out.println(it.next());
+		}
+
 		return valid_flag;
 	}
 
@@ -72,7 +74,6 @@ public class CalcParser
 		} 
 	}
 
-	//this method is not done
 	private boolean match(Type expected)
 	{
 		if(current_token.getType() == expected)
@@ -92,8 +93,6 @@ public class CalcParser
 		if(token_iterator.hasNext())
 		{
 			current_token = token_iterator.next();
-			System.out.println("next token is: "+ current_token.getToken());
-
 		}
 		else
 			current_token = null;
@@ -101,15 +100,7 @@ public class CalcParser
 
 	private static void error(Type expected, Type found)
 	{
-		System.out.println("Error: expected "+ expected +". Found: "+found);
-	}
-
-	private boolean statementList()
-	{
-		if(statement() || statementList())
-			return true;
-		else 
-			return false;
+		//System.out.println("Error: expected "+ expected +". Found: "+found);
 	}
 
 	private boolean statement()
@@ -140,7 +131,6 @@ public class CalcParser
 			return true; 
 		else 
 		{
-			//error();
 			return false; 
 		}
 	}
