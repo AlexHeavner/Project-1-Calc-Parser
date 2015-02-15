@@ -16,6 +16,7 @@ public class CalcWriter {
 	
 	public void write(LinkedList <LinkedList <Token>> statement_list)
 	{
+		LinkedList<String> init_vars = new LinkedList<String>();
 		try
 		{
 			writer = new FileWriter(new File(file_name + ".java"));
@@ -23,14 +24,19 @@ public class CalcWriter {
 			writer.write("import java.util.Scanner; \n public class " + file_name + "{ \n " +
 					"public static void main(String[] args){ \n" +
 					"Scanner scan = new Scanner(System.in);\n");
-			Token prev_element = null;
-			String helper = "";
 			for(LinkedList<Token> element: statement_list)
 			{
 				if(element.get(0).getType() == Type.READ)
 				{
-					writer.write("double " + element.get(1).getToken() + ";\n" +
-							element.get(1).getToken() + "= scan.nextDouble();\n");
+					if(init_vars.contains(element.get(1).getToken()))
+						writer.write(element.get(1).getToken() + "= scan.nextDouble();\n");
+					else
+					{
+						init_vars.add(element.get(1).getToken());
+						writer.write("double " + element.get(1).getToken() + ";\n" +
+								element.get(1).getToken() + "= scan.nextDouble();\n");
+					}
+					
 				}
 				
 				else if(element.get(0).getType() == Type.WRITE)
@@ -44,8 +50,14 @@ public class CalcWriter {
 				}
 				else if(element.get(0).getType() == Type.ID)
 				{
-					writer.write("double "+ element.get(0).getToken() + ";");
-					writer.write(element.get(0).getToken() + "=");
+					if(init_vars.contains(element.get(0).getToken()))
+						writer.write(element.get(0).getToken() + "=");
+					else
+					{
+						writer.write("double "+ element.get(0).getToken() + ";");
+						writer.write(element.get(0).getToken() + "=");
+						init_vars.add(element.get(0).getToken());
+					}
 					
 					for(int count = 2 ; count < element.size(); count++)
 						writer.write(element.get(count).getToken());
