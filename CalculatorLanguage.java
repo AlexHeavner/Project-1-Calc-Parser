@@ -1,7 +1,8 @@
 import java.util.LinkedList;
 
-public class CalculatorLanguage
-{
+
+public class CalculatorLanguage {
+	
 	public CalculatorLanguage(String calc_prog)
 	{
 		//Scan calc program
@@ -15,9 +16,18 @@ public class CalculatorLanguage
 		if(parser.parse_statements())
 		{
 			System.out.println("The program is valid.");
-
-			CalcWriter writer = new CalcWriter("myprog");
+			
+			String[] temp = calc_prog.split("\\W");
+			String prog = temp[temp.length - 2];
+			
+			CalcWriter writer = new CalcWriter(prog);
 			writer.write(statement_list);
+		}
+		//Print errors if program is not valid.
+		else
+		{
+			for(String element: parser.getErrorList())
+				System.out.println(element);
 		}
 	}
 }
