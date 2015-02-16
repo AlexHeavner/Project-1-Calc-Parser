@@ -56,7 +56,7 @@ public class CalcParser
 		{
 			Iterator<String> it = error_list.iterator();
 			while(it.hasNext())
-				System.out.println(it.next());
+				it.next();
 		}
 
 		return valid_flag;
